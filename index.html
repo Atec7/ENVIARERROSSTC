@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Formulário de Serviço</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+    input, textarea, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      box-sizing: border-box;
+    }
+    button {
+      background-color: green;
+      color: white;
+      border: none;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Formulário de Relato</h2>
+
+  <form id="formulario">
+    <label for="ss">SS:</label>
+    <input type="text" id="ss" name="ss" required>
+
+    <label for="equipe">Equipe:</label>
+    <input type="text" id="equipe" name="equipe" required>
+
+    <label for="supervisor">Supervisor:</label>
+    <input type="text" id="supervisor" name="supervisor" required>
+
+    <label for="problema">Problema:</label>
+    <textarea id="problema" name="problema" required></textarea>
+
+    <button type="submit">Enviar</button>
+  </form>
+
+  <script>
+    document.getElementById("formulario").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const ss = document.getElementById("ss").value.trim();
+      const equipe = document.getElementById("equipe").value.trim();
+      const supervisor = document.getElementById("supervisor").value.trim();
+      const problema = document.getElementById("problema").value.trim();
+
+      const mensagem = `
+🚨 *SERVIÇO CORRE O RISCO DE NÃO SER PAGO PELA EQUATORIAL* 🚨
+
+*SS:* ${ss}
+*Equipe:* ${equipe}
+*Supervisor:* ${supervisor}
+*Problema:* ${problema}
+      `;
+
+      const numero = "5564992952748";
+      const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensagem)}`;
+      window.open(url, "_blank");
+    });
+  </script>
+
+</body>
+</html>

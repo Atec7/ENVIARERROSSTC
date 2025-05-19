@@ -24,6 +24,10 @@
       color: white;
       border: none;
       margin-top: 20px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: darkgreen;
     }
   </style>
 </head>
@@ -71,9 +75,10 @@
         "RODRIGO DA COSTA FERREIRA": "5564996107854"
       };
 
-      const numero = numeros[supervisor] || "5564996151084"; // padrão se não encontrar
+      const numero = numeros[supervisor] || "5564996151084";
 
-      const mensagem = `🚨 *SERVIÇO CORRE O RISCO DE NÃO SER PAGO PELA EQUATORIAL* 🚨
+      const mensagem = `
+🚨 *SERVIÇO CORRE O RISCO DE NÃO SER PAGO PELA EQUATORIAL* 🚨
 
 📄 *SS:* ${ss}
 📆 *Data:* ${data}
@@ -82,10 +87,25 @@
 ❗ *Problema:* ${problema}
 
 ✅ O registro das evidências deve ser feito no link abaixo:
-https://forms.office.com/r/XNfkN9UhY1`;
+https://forms.office.com/r/XNfkN9UhY1
+      `;
 
       const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensagem)}`;
-      window.open(url, "_blank");
+
+      // Abre o WhatsApp em nova aba
+      const win = window.open(url, '_blank');
+
+      // Limpa o formulário depois de abrir a aba
+      setTimeout(() => {
+        document.getElementById("formulario").reset();
+
+        // Tenta fechar a aba (nem sempre é permitido)
+        try {
+          win.close();
+        } catch (err) {
+          console.warn("Não foi possível fechar a aba do WhatsApp automaticamente.");
+        }
+      }, 3000);
     });
   </script>
 

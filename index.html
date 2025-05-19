@@ -13,7 +13,7 @@
       display: block;
       margin-top: 10px;
     }
-    input, textarea, button {
+    input, textarea, select, button {
       width: 100%;
       padding: 10px;
       margin-top: 5px;
@@ -35,11 +35,19 @@
     <label for="ss">SS:</label>
     <input type="text" id="ss" name="ss" required>
 
+    <label for="data">Data:</label>
+    <input type="text" id="data" name="data" placeholder="Digite a data livremente" required>
+
     <label for="equipe">Equipe:</label>
     <input type="text" id="equipe" name="equipe" required>
 
     <label for="supervisor">Supervisor:</label>
-    <input type="text" id="supervisor" name="supervisor" required>
+    <select id="supervisor" name="supervisor" required>
+      <option value="">Selecione</option>
+      <option value="JOSE VICTOR DA SILVA COELHO">JOSE VICTOR DA SILVA COELHO</option>
+      <option value="LEANDRO FREITAS AQUINO SILVA">LEANDRO FREITAS AQUINO SILVA</option>
+      <option value="RODRIGO DA COSTA FERREIRA">RODRIGO DA COSTA FERREIRA</option>
+    </select>
 
     <label for="problema">Problema:</label>
     <textarea id="problema" name="problema" required></textarea>
@@ -52,20 +60,30 @@
       e.preventDefault();
 
       const ss = document.getElementById("ss").value.trim();
+      const data = document.getElementById("data").value.trim();
       const equipe = document.getElementById("equipe").value.trim();
-      const supervisor = document.getElementById("supervisor").value.trim();
+      const supervisor = document.getElementById("supervisor").value;
       const problema = document.getElementById("problema").value.trim();
 
-      const mensagem = `
-🚨 *SERVIÇO CORRE O RISCO DE NÃO SER PAGO PELA EQUATORIAL* 🚨
+      const numeros = {
+        "JOSE VICTOR DA SILVA COELHO": "5564999056674",
+        "LEANDRO FREITAS AQUINO SILVA": "5564999536838",
+        "RODRIGO DA COSTA FERREIRA": "5564996107854"
+      };
 
-*SS:* ${ss}
-*Equipe:* ${equipe}
-*Supervisor:* ${supervisor}
-*Problema:* ${problema}
-      `;
+      const numero = numeros[supervisor] || "5564996151084"; // padrão se não encontrar
 
-      const numero = "5564996151084";
+      const mensagem = `🚨 *SERVIÇO CORRE O RISCO DE NÃO SER PAGO PELA EQUATORIAL* 🚨
+
+📄 *SS:* ${ss}
+📆 *Data:* ${data}
+👷 *Equipe:* ${equipe}
+🧑‍💼 *Supervisor:* ${supervisor}
+❗ *Problema:* ${problema}
+
+✅ O registro das evidências deve ser feito no link abaixo:
+https://forms.office.com/r/XNfkN9UhY1`;
+
       const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensagem)}`;
       window.open(url, "_blank");
     });

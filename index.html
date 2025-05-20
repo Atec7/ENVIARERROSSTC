@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Formulário de Serviço</title>
   <style>
     body {
@@ -29,6 +29,26 @@
     button:hover {
       background-color: darkgreen;
     }
+    #tabelaContainer {
+      display: none;
+      margin-top: 30px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: left;
+    }
+    .acoes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
   </style>
 </head>
 <body>
@@ -37,76 +57,145 @@
 
   <form id="formulario">
     <label for="ss">SS:</label>
-    <input type="text" id="ss" name="ss" required>
+    <input type="text" id="ss" required />
 
     <label for="data">Data:</label>
-    <input type="text" id="data" name="data" placeholder="Digite a data livremente" required>
+    <input type="text" id="data" placeholder="Digite a data livremente" required />
 
     <label for="equipe">Equipe:</label>
-    <input type="text" id="equipe" name="equipe" required>
+    <input type="text" id="equipe" required />
 
     <label for="supervisor">Supervisor:</label>
-    <select id="supervisor" name="supervisor" required>
+    <select id="supervisor" required>
       <option value="">Selecione</option>
       <option value="JOSE VICTOR DA SILVA COELHO">JOSE VICTOR DA SILVA COELHO</option>
       <option value="LEANDRO FREITAS AQUINO SILVA">LEANDRO FREITAS AQUINO SILVA</option>
       <option value="RODRIGO DA COSTA FERREIRA">RODRIGO DA COSTA FERREIRA</option>
     </select>
 
+    <label for="strike">Strike:</label>
+    <select id="strike" required>
+      <option value="">Selecione</option>
+      <option value="Strike 1">Strike 1</option>
+      <option value="Strike 2">Strike 2</option>
+      <option value="Strike 3">Strike 3</option>
+      <option value="Strike 4">Strike 4</option>
+      <option value="Strike 5">Strike 5</option>
+    </select>
+
     <label for="problema">Problema:</label>
-    <textarea id="problema" name="problema" required></textarea>
+    <textarea id="problema" required></textarea>
 
     <button type="submit">Enviar</button>
   </form>
 
+  <div class="acoes">
+    <button onclick="toggleTabela()">Mostrar/Ocultar Registros</button>
+    <button onclick="limparTabela()">Limpar Registros</button>
+    <button onclick="exportarExcel()">Exportar Excel</button>
+  </div>
+
+  <div id="tabelaContainer">
+    <h3>Registros Enviados</h3>
+    <table id="tabelaRegistros">
+      <thead>
+        <tr>
+          <th>SS</th>
+          <th>Data</th>
+          <th>Equipe</th>
+          <th>Supervisor</th>
+          <th>Strike</th>
+          <th>Problema</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
   <script>
-    document.getElementById("formulario").addEventListener("submit", function(e) {
+    const form = document.getElementById("formulario");
+    const tabela = document.getElementById("tabelaRegistros").querySelector("tbody");
+    const tabelaContainer = document.getElementById("tabelaContainer");
+
+    const numeros = {
+      "JOSE VICTOR DA SILVA COELHO": "5564999056674",
+      "LEANDRO FREITAS AQUINO SILVA": "5564999536838",
+      "RODRIGO DA COSTA FERREIRA": "5564996107854"
+    };
+
+    form.addEventListener("submit", function(e) {
       e.preventDefault();
 
       const ss = document.getElementById("ss").value.trim();
       const data = document.getElementById("data").value.trim();
       const equipe = document.getElementById("equipe").value.trim();
       const supervisor = document.getElementById("supervisor").value;
+      const strike = document.getElementById("strike").value;
       const problema = document.getElementById("problema").value.trim();
 
-      const numeros = {
-        "JOSE VICTOR DA SILVA COELHO": "5564999056674",
-        "LEANDRO FREITAS AQUINO SILVA": "5564999536838",
-        "RODRIGO DA COSTA FERREIRA": "5564996107854"
-      };
+      // Preenchimento da tabela
+      const novaLinha = tabela.insertRow();
+      novaLinha.insertCell(0).textContent = ss;
+      novaLinha.insertCell(1).textContent = data;
+      novaLinha.insertCell(2).textContent = equipe;
+      novaLinha.insertCell(3).textContent = supervisor;
+      novaLinha.insertCell(4).textContent = strike;
+      novaLinha.insertCell(5).textContent = problema;
+
+      tabelaContainer.style.display = "block";
 
       const numero = numeros[supervisor] || "5564996151084";
-
       const mensagem = `
-🚨 *SERVIÇO CORRE O RISCO DE NÃO SER PAGO PELA EQUATORIAL* 🚨
+🚨 SERVIÇO CORRE O RISCO DE NÃO SER PAGO PELA EQUATORIAL 🚨
 
-📄 *SS:* ${ss}
-📆 *Data:* ${data}
-👷 *Equipe:* ${equipe}
-🧑‍💼 *Supervisor:* ${supervisor}
-❗ *Problema:* ${problema}
+📄 SS: ${ss}
+📆 Data: ${data}
+👷 Equipe: ${equipe}
+🧑‍💼 Supervisor: ${supervisor}
+⚠ Strike: ${strike}
+❗ Problema: ${problema}
 
 ✅ O registro das evidências deve ser feito no link abaixo:
 https://forms.office.com/r/XNfkN9UhY1
       `;
 
-      const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensagem)}`;
+      // Limpa o formulário
+      form.reset();
 
-      // Abre o WhatsApp em nova aba
-      const win = window.open(url, '_blank');
-
-      // Limpa o formulário depois de abrir a aba
+      // Abre o WhatsApp
       setTimeout(() => {
-        document.getElementById("formulario").reset();
-
-        // Tenta fechar a aba (nem sempre é permitido)
-        try {
-          win.close();
-        } catch (err) {
-          console.warn("Não foi possível fechar a aba do WhatsApp automaticamente.");
-        }
-      }, 3000);
+        window.open(https://wa.me/${numero}?text=${encodeURIComponent(mensagem)}, '_blank');
+      }, 300);
     });
+
+    function toggleTabela() {
+      tabelaContainer.style.display = tabelaContainer.style.display === "none" ? "block" : "none";
+    }
+
+    function limparTabela() {
+      if (confirm("Tem certeza que deseja apagar todos os registros?")) {
+        tabela.innerHTML = "";
+      }
+    }
+
+    function exportarExcel() {
+      let html = "<table><tr><th>SS</th><th>Data</th><th>Equipe</th><th>Supervisor</th><th>Strike</th><th>Problema</th></tr>";
+      for (const row of tabela.rows) {
+        html += "<tr>";
+        for (const cell of row.cells) {
+          html += <td>${cell.innerText}</td>;
+        }
+        html += "</tr>";
+      }
+      html += "</table>";
+
+      const blob = new Blob([html], { type: "application/vnd.ms-excel" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "registros.xls";
+      a.click();
+    }
   </script>
 
 </body>

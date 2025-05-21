@@ -66,6 +66,9 @@
     <label for="equipe">Equipe:</label>
     <input type="text" id="equipe" required />
 
+    <label for="endereco">Endereço:</label>
+    <input type="text" id="endereco" required />
+
     <label for="supervisor">Supervisor:</label>
     <select id="supervisor" required>
       <option value="">Selecione</option>
@@ -73,6 +76,7 @@
       <option value="LEANDRO FREITAS AQUINO SILVA">LEANDRO FREITAS AQUINO SILVA</option>
       <option value="RODRIGO DA COSTA FERREIRA">RODRIGO DA COSTA FERREIRA</option>
       <option value="GUSTAVO SAVIANE MARTINS">GUSTAVO SAVIANE MARTINS</option>
+      <option value="ACÁCIO SOUSA JESUS">ACÁCIO SOUSA JESUS</option>
     </select>
 
     <label for="strike">Strike:</label>
@@ -105,6 +109,7 @@
           <th>SS</th>
           <th>Data</th>
           <th>Equipe</th>
+          <th>Endereço</th>
           <th>Supervisor</th>
           <th>Strike</th>
           <th>Problema</th>
@@ -123,7 +128,8 @@
       "JOSE VICTOR DA SILVA COELHO": "5564999056674",
       "LEANDRO FREITAS AQUINO SILVA": "5564999536838",
       "RODRIGO DA COSTA FERREIRA": "5564996107854",
-      "GUSTAVO SAVIANE MARTINS": "5564981138729"
+      "GUSTAVO SAVIANE MARTINS": "5564981138729",
+      "ACÁCIO SOUSA JESUS": "5564999777925"
     };
 
     form.addEventListener("submit", function(e) {
@@ -132,6 +138,7 @@
       const ss = document.getElementById("ss").value.trim();
       const data = document.getElementById("data").value.trim();
       const equipe = document.getElementById("equipe").value.trim();
+      const endereco = document.getElementById("endereco").value.trim();
       const supervisor = document.getElementById("supervisor").value;
       const strike = document.getElementById("strike").value;
       const problema = document.getElementById("problema").value.trim().toUpperCase();
@@ -140,9 +147,10 @@
       novaLinha.insertCell(0).textContent = ss;
       novaLinha.insertCell(1).textContent = data;
       novaLinha.insertCell(2).textContent = equipe;
-      novaLinha.insertCell(3).textContent = supervisor;
-      novaLinha.insertCell(4).textContent = strike;
-      novaLinha.insertCell(5).textContent = problema;
+      novaLinha.insertCell(3).textContent = endereco;
+      novaLinha.insertCell(4).textContent = supervisor;
+      novaLinha.insertCell(5).textContent = strike;
+      novaLinha.insertCell(6).textContent = problema;
 
       tabelaContainer.style.display = "block";
 
@@ -153,6 +161,7 @@
 📄 SS: ${ss}
 📆 Data: ${data}
 👷 Equipe: ${equipe}
+📍 Endereço: ${endereco}
 🧑‍💼 Supervisor: ${supervisor}
 ⚠ Strike: ${strike}
 ❗ Problema: ${problema}
@@ -179,7 +188,7 @@ https://forms.office.com/r/XNfkN9UhY1
     }
 
     function exportarExcel() {
-      let html = "<table><tr><th>SS</th><th>Data</th><th>Equipe</th><th>Supervisor</th><th>Strike</th><th>Problema</th></tr>";
+      let html = "<table><tr><th>SS</th><th>Data</th><th>Equipe</th><th>Endereço</th><th>Supervisor</th><th>Strike</th><th>Problema</th></tr>";
       for (const row of tabela.rows) {
         html += "<tr>";
         for (const cell of row.cells) {
@@ -200,3 +209,4 @@ https://forms.office.com/r/XNfkN9UhY1
 
 </body>
 </html>
+

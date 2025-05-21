@@ -52,6 +52,10 @@
       gap: 10px;
       margin-top: 20px;
     }
+    .checkbox-group label {
+      display: block;
+      margin-top: 5px;
+    }
   </style>
 </head>
 <body>
@@ -91,6 +95,15 @@
       <option value="Strike 4">Strike 4</option>
       <option value="Strike 5">Strike 5</option>
     </select>
+    <br>
+    <div class="checkbox-group">
+      <label>O QUE DEVERIA SER FEITO:</label>
+      <label><input type="checkbox" name="servicos" value="OCORRÊNCIA" /> OCORRÊNCIA</label>
+      <label><input type="checkbox" name="servicos" value="Substituição de Transformador" />REALIZAR PODA</label>
+      <label><input type="checkbox" name="servicos" value="Instalação de Medidor" /> INSTALAÇÃO DE ESPASSADORES</label>
+      <label><input type="checkbox" name="servicos" value="Reparo de Cabos" /> SUBSTITUIÇÃO DE ELO</label>
+      <label><input type="checkbox" name="servicos" value="teste" /> LEVANTAMENTO</label>
+    </div>
 
     <label for="problema">Problema:</label>
     <textarea id="problema" required></textarea>
@@ -116,6 +129,7 @@
           <th>Coordenadas</th>
           <th>Supervisor</th>
           <th>Strike</th>
+          <th>Serviços</th>
           <th>Problema</th>
         </tr>
       </thead>
@@ -141,12 +155,33 @@
       if (partes.length === 2 && !isNaN(partes[0]) && !isNaN(partes[1])) {
         return `(${partes[0]} ${partes[1]})`;
       }
-      return input; // se não bater o padrão, retorna como está
+      return input;
     }
 
     document.getElementById("coordenadas").addEventListener("blur", function () {
       this.value = formatarCoordenadas(this.value);
     });
+
+    function salvarLocalStorage(registros) {
+      localStorage.setItem("registros_servico", JSON.stringify(registros));
+    }
+
+    function carregarLocalStorage() {
+      const dados = localStorage.getItem("registros_servico");
+      return dados ? JSON.parse(dados) : [];
+    }
+
+    function atualizarTabela() {
+      tabela.innerHTML = "";
+      const registros = carregarLocalStorage();
+      registros.forEach(item => {
+        const linha = tabela.insertRow();
+        Object.values(item).forEach(valor => {
+          linha.insertCell().textContent = valor;
+        });
+      });
+      tabelaContainer.style.display = registros.length > 0 ? "block" : "none";
+    }
 
     form.addEventListener("submit", function(e) {
       e.preventDefault();
@@ -159,18 +194,14 @@
       const supervisor = document.getElementById("supervisor").value;
       const strike = document.getElementById("strike").value;
       const problema = document.getElementById("problema").value.trim().toUpperCase();
+      const servicos = Array.from(document.querySelectorAll('input[name="servicos"]:checked')).map(el => el.value).join(", ");
 
-      const novaLinha = tabela.insertRow();
-      novaLinha.insertCell(0).textContent = ss;
-      novaLinha.insertCell(1).textContent = data;
-      novaLinha.insertCell(2).textContent = equipe;
-      novaLinha.insertCell(3).textContent = endereco;
-      novaLinha.insertCell(4).textContent = coordenadas;
-      novaLinha.insertCell(5).textContent = supervisor;
-      novaLinha.insertCell(6).textContent = strike;
-      novaLinha.insertCell(7).textContent = problema;
+      const novoRegistro = { ss, data, equipe, endereco, coordenadas, supervisor, strike, servicos, problema };
 
-      tabelaContainer.style.display = "block";
+      const registros = carregarLocalStorage();
+      registros.push(novoRegistro);
+      salvarLocalStorage(registros);
+      atualizarTabela();
 
       const numero = numeros[supervisor] || "5564996151084";
       const mensagem = `
@@ -183,6 +214,7 @@
 📌 Coordenadas: ${coordenadas}
 🧑‍💼 Supervisor: ${supervisor}
 ⚠ Strike: ${strike}
+🛠 Serviço Deveria Fazer: ${servicos}
 ❗ Problema: ${problema}
 
 ✅ O registro das evidências deve ser feito no link abaixo:
@@ -190,7 +222,6 @@ https://forms.office.com/r/XNfkN9UhY1
       `;
 
       form.reset();
-
       setTimeout(() => {
         window.open(`https://wa.me/${numero}?text=${encodeURIComponent(mensagem)}`, '_blank');
       }, 300);
@@ -202,12 +233,14 @@ https://forms.office.com/r/XNfkN9UhY1
 
     function limparTabela() {
       if (confirm("Tem certeza que deseja apagar todos os registros?")) {
+        localStorage.removeItem("registros_servico");
         tabela.innerHTML = "";
+        tabelaContainer.style.display = "none";
       }
     }
 
     function exportarExcel() {
-      let html = "<table><tr><th>SS</th><th>Data</th><th>Equipe</th><th>Endereço</th><th>Coordenadas</th><th>Supervisor</th><th>Strike</th><th>Problema</th></tr>";
+      let html = "<table><tr><th>SS</th><th>Data</th><th>Equipe</th><th>Endereço</th><th>Coordenadas</th><th>Supervisor</th><th>Strike</th><th>Serviços</th><th>Problema</th></tr>";
       for (const row of tabela.rows) {
         html += "<tr>";
         for (const cell of row.cells) {
@@ -224,6 +257,9 @@ https://forms.office.com/r/XNfkN9UhY1
       a.download = "registros.xls";
       a.click();
     }
+
+    // Atualiza a tabela com os dados do localStorage ao carregar
+    window.addEventListener("DOMContentLoaded", atualizarTabela);
   </script>
 
 </body>

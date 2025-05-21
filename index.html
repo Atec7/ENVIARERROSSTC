@@ -19,6 +19,9 @@
       margin-top: 5px;
       box-sizing: border-box;
     }
+    textarea {
+      text-transform: uppercase;
+    }
     button {
       background-color: green;
       color: white;
@@ -58,7 +61,7 @@
     <input type="text" id="ss" required />
 
     <label for="data">Data:</label>
-<input type="text" id="data" required />
+    <input type="text" id="data" required />
 
     <label for="equipe">Equipe:</label>
     <input type="text" id="equipe" required />
@@ -69,6 +72,7 @@
       <option value="JOSE VICTOR DA SILVA COELHO">JOSE VICTOR DA SILVA COELHO</option>
       <option value="LEANDRO FREITAS AQUINO SILVA">LEANDRO FREITAS AQUINO SILVA</option>
       <option value="RODRIGO DA COSTA FERREIRA">RODRIGO DA COSTA FERREIRA</option>
+      <option value="GUSTAVO SAVIANE MARTINS">GUSTAVO SAVIANE MARTINS</option>
     </select>
 
     <label for="strike">Strike:</label>
@@ -118,7 +122,8 @@
     const numeros = {
       "JOSE VICTOR DA SILVA COELHO": "5564999056674",
       "LEANDRO FREITAS AQUINO SILVA": "5564999536838",
-      "RODRIGO DA COSTA FERREIRA": "5564996107854"
+      "RODRIGO DA COSTA FERREIRA": "5564996107854",
+      "GUSTAVO SAVIANE MARTINS": "5564981138729"
     };
 
     form.addEventListener("submit", function(e) {
@@ -129,9 +134,8 @@
       const equipe = document.getElementById("equipe").value.trim();
       const supervisor = document.getElementById("supervisor").value;
       const strike = document.getElementById("strike").value;
-      const problema = document.getElementById("problema").value.trim();
+      const problema = document.getElementById("problema").value.trim().toUpperCase();
 
-      // Preenchimento da tabela
       const novaLinha = tabela.insertRow();
       novaLinha.insertCell(0).textContent = ss;
       novaLinha.insertCell(1).textContent = data;
@@ -157,10 +161,8 @@
 https://forms.office.com/r/XNfkN9UhY1
       `;
 
-      // Limpa o formulário
       form.reset();
 
-      // Abre o WhatsApp
       setTimeout(() => {
         window.open(`https://wa.me/${numero}?text=${encodeURIComponent(mensagem)}`, '_blank');
       }, 300);

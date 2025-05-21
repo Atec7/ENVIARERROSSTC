@@ -70,7 +70,7 @@
     <input type="text" id="endereco" required />
 
     <label for="coordenadas">Coordenadas:</label>
-    <input type="text" id="coordenadas" placeholder="-18,700755 -51,223572" required />
+    <input type="text" id="coordenadas" required />
 
     <label for="supervisor">Supervisor:</label>
     <select id="supervisor" required>
@@ -127,12 +127,6 @@
     const form = document.getElementById("formulario");
     const tabela = document.getElementById("tabelaRegistros").querySelector("tbody");
     const tabelaContainer = document.getElementById("tabelaContainer");
-    const coordenadasInput = document.getElementById("coordenadas");
-
-    // Converte vírgulas para pontos ao digitar ou colar
-    coordenadasInput.addEventListener("input", () => {
-      coordenadasInput.value = coordenadasInput.value.replace(/,/g, ".");
-    });
 
     const numeros = {
       "JOSE VICTOR DA SILVA COELHO": "5564999056674",
@@ -142,6 +136,18 @@
       "ACÁCIO SOUSA JESUS": "5564999777925"
     };
 
+    function formatarCoordenadas(input) {
+      const partes = input.replace(/,/g, '.').trim().split(/\s+/);
+      if (partes.length === 2 && !isNaN(partes[0]) && !isNaN(partes[1])) {
+        return `(${partes[0]} ${partes[1]})`;
+      }
+      return input; // se não bater o padrão, retorna como está
+    }
+
+    document.getElementById("coordenadas").addEventListener("blur", function () {
+      this.value = formatarCoordenadas(this.value);
+    });
+
     form.addEventListener("submit", function(e) {
       e.preventDefault();
 
@@ -149,7 +155,7 @@
       const data = document.getElementById("data").value.trim();
       const equipe = document.getElementById("equipe").value.trim();
       const endereco = document.getElementById("endereco").value.trim();
-      const coordenadas = coordenadasInput.value.trim();
+      const coordenadas = document.getElementById("coordenadas").value.trim();
       const supervisor = document.getElementById("supervisor").value;
       const strike = document.getElementById("strike").value;
       const problema = document.getElementById("problema").value.trim().toUpperCase();
@@ -186,7 +192,7 @@ https://forms.office.com/r/XNfkN9UhY1
       form.reset();
 
       setTimeout(() => {
-        window.open(https://wa.me/${numero}?text=${encodeURIComponent(mensagem)}, '_blank');
+        window.open(`https://wa.me/${numero}?text=${encodeURIComponent(mensagem)}`, '_blank');
       }, 300);
     });
 
@@ -205,7 +211,7 @@ https://forms.office.com/r/XNfkN9UhY1
       for (const row of tabela.rows) {
         html += "<tr>";
         for (const cell of row.cells) {
-          html += <td>${cell.innerText}</td>;
+          html += `<td>${cell.innerText}</td>`;
         }
         html += "</tr>";
       }

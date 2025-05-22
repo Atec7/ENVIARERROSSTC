@@ -6,107 +6,210 @@
   <title>Formulário de Serviço</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      margin: 40px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      color: #333;
     }
+
+    /* Direitos autorais no topo */
+    .direitos {
+      font-size: 10px;
+      text-align: center;
+      padding: 5px;
+      background-color: #ddd;
+      color: #555;
+    }
+
+    form {
+      background-color: #fff;
+      padding: 30px;
+      max-width: 900px;
+      margin: 20px auto;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+
     label {
       display: block;
       margin-top: 10px;
+      font-weight: bold;
     }
-    input, textarea, select, button {
+
+    input, textarea, select {
       width: 100%;
       padding: 10px;
       margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
       box-sizing: border-box;
+      font-size: 14px;
     }
+
     textarea {
       text-transform: uppercase;
+      resize: vertical;
+      min-height: 80px;
     }
+
     button {
-      background-color: green;
+      background-color: #28a745;
       color: white;
       border: none;
+      padding: 10px 20px;
       margin-top: 20px;
+      border-radius: 4px;
       cursor: pointer;
+      font-size: 16px;
     }
+
     button:hover {
-      background-color: darkgreen;
+      background-color: #218838;
     }
-    #tabelaContainer {
-      display: none;
-      margin-top: 30px;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-    }
-    th, td {
-      border: 1px solid #ccc;
-      padding: 8px;
-      text-align: left;
-    }
+
     .acoes {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
+      margin: 20px auto;
+      justify-content: center;
+      max-width: 900px;
+    }
+
+    .acoes button {
+      background-color: #007bff;
+    }
+
+    .acoes button:hover {
+      background-color: #0056b3;
+    }
+
+    #tabelaContainer {
+      display: none;
+      max-width: 95%;
+      margin: 20px auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f1f1f1;
+    }
+
+    .input-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 15px;
+    }
+
+    .input-group > div {
+      flex: 1 1 300px;
+      min-width: 250px;
+    }
+
+    .checkbox-group {
       margin-top: 20px;
     }
+
     .checkbox-group label {
       display: block;
+      font-weight: normal;
       margin-top: 5px;
     }
   </style>
 </head>
 <body>
 
+  <div class="direitos">
+    Arnaldo S. Lima - todos os direitos reservados
+  </div>
+
   <form id="formulario">
-    <label for="ss">SS:</label>
-    <input type="text" id="ss" required />
+    <div class="input-group">
+      <div>
+        <label for="ss">SS:</label>
+        <input type="text" id="ss" required />
+      </div>
+      <div>
+        <label for="data">Data:</label>
+        <input type="text" id="data" required />
+      </div>
+    </div>
 
-    <label for="data">Data:</label>
-    <input type="text" id="data" required />
+    <div class="input-group">
+      <div>
+        <label for="equipe">Equipe:</label>
+        <input type="text" id="equipe" required />
+      </div>
+      <div>
+        <label for="endereco">Endereço:</label>
+        <input type="text" id="endereco" required />
+      </div>
+    </div>
 
-    <label for="equipe">Equipe:</label>
-    <input type="text" id="equipe" required />
+    <div class="input-group">
+      <div>
+        <label for="coordenadas">Coordenadas:</label>
+        <input type="text" id="coordenadas" required placeholder="Exemplo: -18.700755 -51.223572" />
+      </div>
+    </div>
 
-    <label for="endereco">Endereço:</label>
-    <input type="text" id="endereco" required />
+    <div class="input-group">
+      <div>
+        <label for="supervisor">Supervisor:</label>
+        <select id="supervisor" required>
+          <option value="">Selecione</option>
+          <option value="JOSE VICTOR DA SILVA COELHO">JOSE VICTOR DA SILVA COELHO</option>
+          <option value="LEANDRO FREITAS AQUINO SILVA">LEANDRO FREITAS AQUINO SILVA</option>
+          <option value="RODRIGO DA COSTA FERREIRA">RODRIGO DA COSTA FERREIRA</option>
+          <option value="GUSTAVO SAVIANE MARTINS">GUSTAVO SAVIANE MARTINS</option>
+          <option value="ACÁCIO SOUSA JESUS">ACÁCIO SOUSA JESUS</option>
+          <option value="JOSE AILSON NASCIMENTO SOUTO">JOSE AILSON NASCIMENTO SOUTO</option>
+        </select>
+      </div>
+      <div>
+        <label for="strike">Strike:</label>
+        <select id="strike" required>
+          <option value="">Selecione</option>
+          <option value="Strike 1">Strike 1</option>
+          <option value="Strike 2">Strike 2</option>
+          <option value="Strike 3">Strike 3</option>
+          <option value="Strike 4">Strike 4</option>
+          <option value="Strike 5">Strike 5</option>
+        </select>
+      </div>
+    </div>
 
-    <label for="coordenadas">Coordenadas:</label>
-    <input type="text" id="coordenadas" required />
-
-    <label for="supervisor">Supervisor:</label>
-    <select id="supervisor" required>
-      <option value="">Selecione</option>
-      <option value="JOSE VICTOR DA SILVA COELHO">JOSE VICTOR DA SILVA COELHO</option>
-      <option value="LEANDRO FREITAS AQUINO SILVA">LEANDRO FREITAS AQUINO SILVA</option>
-      <option value="RODRIGO DA COSTA FERREIRA">RODRIGO DA COSTA FERREIRA</option>
-      <option value="GUSTAVO SAVIANE MARTINS">GUSTAVO SAVIANE MARTINS</option>
-      <option value="ACÁCIO SOUSA JESUS">ACÁCIO SOUSA JESUS</option>
-    </select>
-
-    <label for="strike">Strike:</label>
-    <select id="strike" required>
-      <option value="">Selecione</option>
-      <option value="Strike 1">Strike 1</option>
-      <option value="Strike 2">Strike 2</option>
-      <option value="Strike 3">Strike 3</option>
-      <option value="Strike 4">Strike 4</option>
-      <option value="Strike 5">Strike 5</option>
-    </select>
-    <br>
     <div class="checkbox-group">
       <label>O QUE DEVERIA SER FEITO:</label>
       <label><input type="checkbox" name="servicos" value="OCORRÊNCIA" /> OCORRÊNCIA</label>
-      <label><input type="checkbox" name="servicos" value="REALIZAR PODA" />REALIZAR PODA</label>
+      <label><input type="checkbox" name="servicos" value="REALIZAR PODA" /> REALIZAR PODA</label>
       <label><input type="checkbox" name="servicos" value="INSTALAÇÃO DE ESPASSADORES" /> INSTALAÇÃO DE ESPASSADORES</label>
       <label><input type="checkbox" name="servicos" value="SUBSTITUIÇÃO DE ELO" /> SUBSTITUIÇÃO DE ELO</label>
       <label><input type="checkbox" name="servicos" value="SUBSTITUIÇÃO DE RAMAL" /> SUBSTITUIÇÃO DE RAMAL</label>
     </div>
 
-    <label for="problema">Problema:</label>
-    <textarea id="problema" required></textarea>
+    <div>
+      <label for="problema">Problema:</label>
+      <textarea id="problema" required></textarea>
+    </div>
 
     <button type="submit">Enviar</button>
   </form>
@@ -136,8 +239,7 @@
       <tbody></tbody>
     </table>
   </div>
-
-  <script>
+<script>
     const form = document.getElementById("formulario");
     const tabela = document.getElementById("tabelaRegistros").querySelector("tbody");
     const tabelaContainer = document.getElementById("tabelaContainer");
@@ -147,19 +249,20 @@
       "LEANDRO FREITAS AQUINO SILVA": "5564999536838",
       "RODRIGO DA COSTA FERREIRA": "5564996107854",
       "GUSTAVO SAVIANE MARTINS": "5564981138729",
-      "ACÁCIO SOUSA JESUS": "5564999777925"
+      "ACÁCIO SOUSA JESUS": "5564999777925",
+      "JOSE AILSON NASCIMENTO SOUTO": "5562999099920"
     };
 
-    function formatarCoordenadas(input) {
-      const partes = input.replace(/,/g, '.').trim().split(/\s+/);
-      if (partes.length === 2 && !isNaN(partes[0]) && !isNaN(partes[1])) {
-        return `(${partes[0]} ${partes[1]})`;
-      }
-      return input;
-    }
-
     document.getElementById("coordenadas").addEventListener("blur", function () {
-      this.value = formatarCoordenadas(this.value);
+      const raw = this.value.replace(/[()]/g, "").replace(/,/g, '.').trim();
+      const partes = raw.split(/\s+/);
+
+      if (partes.length === 2 && !isNaN(partes[0]) && !isNaN(partes[1])) {
+        const lat = partes[0];
+        const lng = partes[1];
+        const url = `https://www.google.com/maps?q=${lat},${lng}`;
+        this.value = url;
+      }
     });
 
     function salvarLocalStorage(registros) {
@@ -197,7 +300,6 @@
       const servicos = Array.from(document.querySelectorAll('input[name="servicos"]:checked')).map(el => el.value).join(", ");
 
       const novoRegistro = { ss, data, equipe, endereco, coordenadas, supervisor, strike, servicos, problema };
-
       const registros = carregarLocalStorage();
       registros.push(novoRegistro);
       salvarLocalStorage(registros);
@@ -218,8 +320,7 @@
 ❗ Problema: ${problema}
 
 ✅ O registro das evidências deve ser feito no link abaixo:
-https://forms.office.com/r/XNfkN9UhY1
-      `;
+https://forms.office.com/r/XNfkN9UhY1`;
 
       form.reset();
       setTimeout(() => {
@@ -258,9 +359,7 @@ https://forms.office.com/r/XNfkN9UhY1
       a.click();
     }
 
-    // Atualiza a tabela com os dados do localStorage ao carregar
     window.addEventListener("DOMContentLoaded", atualizarTabela);
   </script>
-
 </body>
 </html>

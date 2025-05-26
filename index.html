@@ -25,7 +25,7 @@
     form {
       background-color: #fff;
       padding: 30px;
-      max-width: 900px;
+      max-width: 90%;
       margin: 20px auto;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       border-radius: 8px;
@@ -63,7 +63,19 @@
       cursor: pointer;
       font-size: 16px;
     }
-
+.CANCELAR {
+      background-color: rgb(141, 3, 3);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin-top: 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .CANCELAR:hover {
+      background-color: red;
+    }
     button:hover {
       background-color: #218838;
     }
@@ -132,28 +144,44 @@
   display: block;
   font-weight: normal;
   margin-top: 5px;
+  color: black;
 }
 
 .checkbox-group input[type="checkbox"] {
-  transform: scale(1.5); /* Aumenta o tamanho do checkbox */
-  margin-right: 10px; /* Espaço entre o checkbox e o texto */
+  transform: scale(1.5);
+  margin-right: 10px;
   vertical-align: middle;
 }
 
+.NOMEDOSISTEMA{
+  text-align: center;
+  font-size: 26PX;
+}
 
+.info {
+  font-size: 16px;
+  text-align: center;
+}
+
+.Atribuições{
+  text-align: center;
+  font-size: 30px;
+}
   </style>
 </head>
 <body>
 
+
+<H1 class="NOMEDOSISTEMA">REGISTRO DE NÃO CONFORMIDADE NA QUALIDADE DE SERVIÇOS EM STC</H1>
+<p class="info">Gerência de Serviços Técnicos e Comerciais - Informação e Performance</p>
   <div class="direitos">
     Arnaldo S. Lima - todos os direitos reservados
   </div>
-
   <form id="formulario">
     <div class="input-group">
       <div>
         <label for="ss">🗒⚙ NÚMERO DA SS:</label>
-        <input type="text" id="ss" required />
+        <input type="text" id="ss" required placeholder="Número da Miscelânea ou Ocorrência"/>
       </div>
       <div>
         <label for="data">📅 DATA E HORA DA EXECUÇÃO:</label>
@@ -164,7 +192,7 @@
     <div class="input-group">
       <div>
         <label for="equipe">🚙EQUIPE:</label>
-        <input type="text" id="equipe" required />
+        <input type="text" id="equipe" required placeholder="Prefixo EQTL ou Prefixo PARTNER"/>
       </div>
       <div>
         <label for="endereco">📍ENDEREÇO:</label>
@@ -208,21 +236,22 @@
     <div class="input-group">
       <div>
         <label for="ordemServico">🟢 ORDEM DE SERVIÇO:</label>
-        <input type="text" id="ordemServico" />
+        <input type="text" id="ordemServico" required placeholder="Copia e Cola da Oredem de Execução do OPER"/>
       </div>
       <div>
         <label for="rejeicaoEquatorial">🔴 MOTIVO DA REJEIÇÃO:</label>
-        <input type="text" id="rejeicaoEquatorial" />
+        <input type="text" id="rejeicaoEquatorial" required placeholder="Copia e Cola do motivo de Rejeição do SGT"/>
       </div>
     </div>
 
     <div class="checkbox-group">
-      <label><b>⬇ SERVIÇO ATRIBUIDO À EQUIPE:</b></label>
-      <label><input type="checkbox" name="servicos" value="OCORRÊNCIA" /> OCORRÊNCIA</label>
-      <label><input type="checkbox" name="servicos" value="REALIZAR PODA" /> REALIZAR PODA</label>
-      <label><input type="checkbox" name="servicos" value="INSTALAÇÃO DE ESPASSADORES" /> INSTALAÇÃO DE ESPASSADORES</label>
-      <label><input type="checkbox" name="servicos" value="SUBSTITUIÇÃO DE ELO" /> SUBSTITUIÇÃO DE ELO</label>
-      <label><input type="checkbox" name="servicos" value="SUBSTITUIÇÃO DE RAMAL" /> SUBSTITUIÇÃO DE RAMAL</label>
+      <label><b>⬇ SERVIÇO ATRIBUIDO À EQUIPE PELO C.O.I:</b></label>
+      <label><input type="checkbox" name="servicos" value="OCORRÊNCIA" /><B>⚙️OCORRÊNCIA</B></label>
+      <label><input type="checkbox" name="servicos" value="REALIZAR PODA" /><B>⚙️REALIZAR PODA</B></label>
+      <label><input type="checkbox" name="servicos" value="INSTALAÇÃO DE ESPAÇADORES" /><B>⚙️INSTALAÇÃO DE ESPAÇADORES</B></label>
+      <label><input type="checkbox" name="servicos" value="SUBSTITUIÇÃO DE ELO" /><B>⚙️SUBSTITUIÇÃO DE ELO</B></label>
+      <label><input type="checkbox" name="servicos" value="SUBSTITUIÇÃO DE RAMAL" /><B>⚙️SUBSTITUIÇÃO DE RAMAL</B></label>
+      <LABEl><input type="checkbox" name="servicos" value="LEVANTAMENTO NECESSIDADE"><B>⚙️LEVANTAMENTO NECESSIDADE</B></LABEl>
     </div>
 <BR>
 </BR>
@@ -231,17 +260,16 @@
       <textarea id="problema" required placeholder= "🚨OBRIGATÓRIO O NÚMERO DO POSTE! 🚨🚨OBRIGATÓRIO O NÚMERO DO POSTE! 🚨🚨OBRIGATÓRIO O NÚMERO DO POSTE! 🚨"></textarea>
     </div>
 
-    <button type="submit">Enviar</button>
-  </form>
+    <button type="submit"> SOLICITAR RETRABALHO 🪃</button>
+    <button class="CANCELAR" type="submit" onclick="location.reload()">CANCELAR O RETRABALHO ❌</button>
 
-  <div class="acoes">
     <button onclick="toggleTabela()">Mostrar/Ocultar Registros</button>
     <button onclick="limparTabela()">Limpar Registros</button>
     <button onclick="exportarExcel()">Exportar Excel</button>
-  </div>
+  </form>
 
   <div id="tabelaContainer">
-    <h3>Registros Enviados</h3>
+    <h3 class="Atribuições">⬇ Minhas Atribuições ⬇</h3>
     <table id="tabelaRegistros">
       <thead>
         <tr>
@@ -249,7 +277,7 @@
           <th>Data</th>
           <th>Equipe</th>
           <th>Endereço</th>
-          <th>Coordenadas</th>
+          <th>Local da Execução</th>
           <th>Supervisor</th>
           <th>Strike</th>
           <th>Serviços</th>
@@ -338,7 +366,7 @@
 *DATA:* ${data}
 *EQUIPE:* ${equipe}
 *ENDEREÇO:* ${endereco}
-*LOCAL:* ${coordenadas}
+*LOCAL EXECUÇÃO:* ${coordenadas}
 *SUPERVISOR:* ${supervisor}
 *STRIKE:* ${strike}
 *SERVIÇO ATRIBUIDO:* ${servicos}
@@ -348,6 +376,9 @@
 
 *O registro das evidências deve ser feito no link abaixo:*
 *https://forms.office.com/r/XNfkN9UhY1*
+
+*POR FAVOR ORIENTAR ESTA EQUIPE PARA EVITAR MAIS RETRABALHOS.*
+
  _As evidências são tão importantes quanto a execução do serviço!_`;
 
     form.reset();
@@ -361,7 +392,7 @@
   }
 
   function limparTabela() {
-    if (confirm("Tem certeza que deseja apagar todos os registros?")) {
+    if (confirm("Tem certeza que deseja apagar todos os registros? 🚨AÇÃO NÃO ACONSELHADA!!!")) {
       localStorage.removeItem("registros_servico");
       tabela.innerHTML = "";
       tabelaContainer.style.display = "none";
